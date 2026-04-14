@@ -19,7 +19,7 @@ export default function HeroSection() {
         </div>
         <div style={{ position: 'absolute', right: 430, top: 0, width: 260, height: '100%', background: 'linear-gradient(to right, #040404, rgba(0,0,0,0))', zIndex: 2, pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', right: 0, bottom: 0, width: 800, height: 180, background: 'linear-gradient(to bottom, rgba(0,0,0,0), black)', zIndex: 2, pointerEvents: 'none' }} />
-        <h1 className="text-gradient-silver" style={{ position: 'absolute', left: 70, top: 80, fontSize: 50, fontWeight: 800, lineHeight: '58px', width: 562, zIndex: 3 }}>
+        <h1 className="text-gradient-silver" style={{ position: 'absolute', left: 70, top: 80, fontSize: 30, fontWeight: 800, lineHeight: '58px', width: 562, zIndex: 3 }}>
           Get India&apos;s First Prepaid Metal Card
         </h1>
         <p style={{ position: 'absolute', left: 70, top: 220, fontSize: 20, color: '#dcdcdc', zIndex: 3 }}>
