@@ -4,7 +4,6 @@ import { ASSETS } from '@/lib/data'
 export default function ConvertSection() {
   return (
     <>
-      {/* ── DESKTOP ── */}
       <section className="conv-desktop" style={{ background: 'black', width: '100%', height: 640, overflow: 'hidden', position: 'relative' }}>
         <div style={{ position: 'absolute', left: -304, top: -260, width: 766, height: 766, pointerEvents: 'none' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -29,9 +28,7 @@ export default function ConvertSection() {
         </Link>
       </section>
 
-      {/* ── MOBILE ── */}
       <section className="conv-mobile" style={{ display: 'none', background: 'black', padding: '40px 22px', position: 'relative', overflow: 'hidden' }}>
-        {/* Glow */}
         <div style={{ position: 'absolute', left: -200, top: -200, width: 500, height: 500, pointerEvents: 'none', opacity: 0.6 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={ASSETS.convertGlow} alt="" style={{ width: '100%', height: '100%' }} />
@@ -45,22 +42,12 @@ export default function ConvertSection() {
           <p style={{ fontSize: 16, color: 'rgba(214,214,214,0.82)', textAlign: 'center' }}>FREE Movie Tickets worth <strong style={{ color: 'white' }}>₹300</strong></p>
         </div>
         <div style={{ height: 1, background: 'rgba(255,255,255,0.2)', marginBottom: 20 }} />
-
-        {/* Video — properly configured for mobile */}
-        <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 24, position: 'relative', background: '#111' }}>
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{ width: '100%', display: 'block', borderRadius: 12 }}
-          >
+        <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 24, background: '#111' }}>
+          <video autoPlay loop muted playsInline style={{ width: '100%', display: 'block', borderRadius: 12 }}>
             <source src="/videos/convert-card.webm" type="video/webm" />
             <source src="/videos/convert-card.mp4" type="video/mp4" />
           </video>
         </div>
-
-        {/* CTA — "Buy Now" (item 13) */}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Link href="/collection"
             style={{ background: 'white', borderRadius: 13, height: 45, width: 250, display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
