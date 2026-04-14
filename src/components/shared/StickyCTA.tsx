@@ -48,7 +48,7 @@ export default function StickyCTA() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             <span className="cta-mrp" style={{ fontFamily: 'Roboto,sans-serif', fontSize: 22, color: 'white' }}>MRP</span>
             <span className="cta-old" style={{ fontFamily: 'Roboto,sans-serif', fontSize: 22, color: 'white', position: 'relative' }}>
-              ₹999
+              ₹5999
               <span style={{ position: 'absolute', width: '108%', height: 2, background: 'white', top: '50%', left: '-4%', transform: 'rotate(-12deg)', display: 'block' }} />
             </span>
           </div>
@@ -56,7 +56,7 @@ export default function StickyCTA() {
         <Link href="/collection" className="btn-blue-gradient cta-buy-btn"
           style={{ position: 'absolute', right: 101, top: '50%', transform: 'translateY(-50%)', zIndex: 10, padding: '0 22px', height: 38, display: 'flex', alignItems: 'center', textDecoration: 'none', borderRadius: 4 }}>
           <span style={{ fontFamily: 'Inter,sans-serif', fontWeight: 500, fontSize: 18, color: 'white', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
-            BUY NOW @ ₹499
+            BUY NOW at ₹2999
           </span>
         </Link>
       </div>
