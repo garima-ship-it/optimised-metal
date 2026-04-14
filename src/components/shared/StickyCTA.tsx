@@ -1,10 +1,12 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { ASSETS } from '@/lib/data'
 
 export default function StickyCTA() {
   const [time, setTime] = useState({ h: 0, m: 14, s: 47 })
+  const [visible, setVisible] = useState(true)
+  const heroRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -20,10 +22,29 @@ export default function StickyCTA() {
     return () => clearInterval(t)
   }, [])
 
+  // On mobile: hide sticky CTA until user scrolls past the hero video
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768
+    if (!isMobile) return // desktop always shows
+
+    // Find the hero section height to know when to show
+    const handleScroll = () => {
+      const heroHeight = window.innerHeight * 0.85 // approximately past the video
+      setVisible(window.scrollY > heroHeight)
+    }
+
+    // Start hidden on mobile
+    setVisible(false)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const pad = (n: number) => String(n).padStart(2, '0')
 
+  if (!visible) return null
+
   return (
-    <div className="sticky-cta">
+    <div ref={heroRef} className="sticky-cta">
       {/* Timer band */}
       <div className="cta-timer-band">
         {/* eslint-disable-next-line @next/next/no-img-element */}
