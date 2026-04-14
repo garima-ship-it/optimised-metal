@@ -19,7 +19,7 @@ export default function HeroSection() {
         </div>
         <div style={{ position: 'absolute', right: 430, top: 0, width: 260, height: '100%', background: 'linear-gradient(to right, #040404, rgba(0,0,0,0))', zIndex: 2, pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', right: 0, bottom: 0, width: 800, height: 180, background: 'linear-gradient(to bottom, rgba(0,0,0,0), black)', zIndex: 2, pointerEvents: 'none' }} />
-        <h1 className="text-gradient-silver" style={{ position: 'absolute', left: 70, top: 80, fontSize: 54, fontWeight: 800, lineHeight: '58px', width: 562, zIndex: 3 }}>
+        <h1 className="text-gradient-silver" style={{ position: 'absolute', left: 70, top: 80, fontSize: 50, fontWeight: 800, lineHeight: '58px', width: 562, zIndex: 3 }}>
           Get India&apos;s First Prepaid Metal Card
         </h1>
         <p style={{ position: 'absolute', left: 70, top: 220, fontSize: 20, color: '#dcdcdc', zIndex: 3 }}>
@@ -77,7 +77,7 @@ export default function HeroSection() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={b.icon2} alt="" style={{ width: 25, height: 25, borderRadius: 3, objectFit: 'cover', transform: `rotate(${b.rot2})` }} />
               </div>
-              <div style={{ position: 'absolute', bottom: 6, left: 0, right: 0, textAlign: 'center', fontSize: 11, color: '#9ca3af', lineHeight: '14px', whiteSpace: 'pre-line' }}>
+              <div style={{ position: 'absolute', bottom: 6, left: 0, right: 0, textAlign: 'center', fontSize: 14, color: '#ffffff', lineHeight: '14px', whiteSpace: 'pre-line' }}>
                 {b.label}
               </div>
             </div>
@@ -87,7 +87,7 @@ export default function HeroSection() {
         {/* CTA — changed to "Buy Now" (item 7→8) */}
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24 }}>
           <Link href="/collection" style={{ background: 'white', borderRadius: 10, height: 48, width: 226, display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-            <span style={{ fontSize: 15, fontWeight: 500, color: 'black' }}>Buy Now</span>
+            <span style={{ fontSize: 15, fontWeight: 500, color: 'black' }}>Buy Now at ₹2999</span>
           </Link>
         </div>
 
