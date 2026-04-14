@@ -68,7 +68,7 @@ export default function HomeFooter() {
 
       {/* ── MOBILE ── */}
       <footer className="hf-mobile" style={{ display: 'none', background: '#040404', padding: '40px 35px 32px' }}>
-        <p style={{ fontSize: 20, fontWeight: 700, color: '#d4af37', marginBottom: 12 }}>NeoZAP</p>
+        <p style={{ fontSize: 20, fontWeight: 700, marginBottom: 12, background: 'linear-gradient(95.32deg, rgb(237, 237, 239) 3.75%, rgb(97, 95, 105) 95.24%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline-block' }}>NeoZAP</p>
         <p style={{ fontSize: 15, color: '#6b7280', lineHeight: '22px', marginBottom: 24 }}>
           We convert your plastic credit and debit cards into premium, durable metal cards. Stylish, secure, and built to impress.
         </p>
