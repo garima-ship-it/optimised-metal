@@ -1,12 +1,10 @@
 'use client'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ASSETS } from '@/lib/data'
 
 export default function StickyCTA() {
   const [time, setTime] = useState({ h: 0, m: 14, s: 47 })
   const [visible, setVisible] = useState(true)
-  const heroRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -22,19 +20,10 @@ export default function StickyCTA() {
     return () => clearInterval(t)
   }, [])
 
-  // On mobile: hide sticky CTA until user scrolls past the hero video
   useEffect(() => {
-    const isMobile = window.innerWidth <= 768
-    if (!isMobile) return // desktop always shows
-
-    // Find the hero section height to know when to show
-    const handleScroll = () => {
-      const heroHeight = window.innerHeight * 0.85 // approximately past the video
-      setVisible(window.scrollY > heroHeight)
-    }
-
-    // Start hidden on mobile
+    if (window.innerWidth > 768) return
     setVisible(false)
+    const handleScroll = () => setVisible(window.scrollY > window.innerHeight * 0.85)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -44,22 +33,13 @@ export default function StickyCTA() {
   if (!visible) return null
 
   return (
-    <div ref={heroRef} className="sticky-cta">
-      {/* Timer band */}
+    <div className="sticky-cta">
       <div className="cta-timer-band">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={ASSETS.clockIcon} alt="" style={{ width: 18, height: 18, filter: 'brightness(10)' }} />
         <span style={{ fontFamily: 'Inter,sans-serif', fontSize: 16, fontWeight: 600, color: 'white' }}>
-          Offer Ends In: {pad(time.h)} : {pad(time.m)} : {pad(time.s)}
+          ⏰ Offer Ends In: {pad(time.h)} : {pad(time.m)} : {pad(time.s)}
         </span>
       </div>
-
-      {/* Offer band */}
       <div className="cta-offer-band">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={ASSETS.ctaBall} alt=""
-          className="cta-ball-img"
-          style={{ position: 'absolute', left: 147, top: 0, width: 126, height: 87, objectFit: 'cover', opacity: 0.6, pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,9,7,0.5)', pointerEvents: 'none' }} />
         <div className="cta-left" style={{ position: 'relative', zIndex: 2, display: 'flex', alignItems: 'center', gap: 16, paddingLeft: 151 }}>
           <span className="cta-label" style={{ fontFamily: 'Poppins,sans-serif', fontSize: 20, fontWeight: 500, color: '#4fabff', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
@@ -80,20 +60,8 @@ export default function StickyCTA() {
           </span>
         </Link>
       </div>
-
       <style>{`
         @media (max-width: 768px) {
           .cta-timer-band { height: 24px !important; }
           .cta-timer-band span { font-size: 12px !important; }
-          .cta-ball-img { display: none !important; }
           .cta-left { padding-left: 12px !important; gap: 8px !important; }
-          .cta-label { font-size: 13px !important; }
-          .cta-mrp { font-size: 14px !important; }
-          .cta-old { font-size: 14px !important; }
-          .cta-buy-btn { right: 10px !important; padding: 0 10px !important; height: 30px !important; }
-          .cta-buy-btn span { font-size: 12px !important; }
-        }
-      `}</style>
-    </div>
-  )
-}
