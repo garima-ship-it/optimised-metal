@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function StickyCTA() {
   const [time, setTime] = useState({ h: 0, m: 14, s: 47 })
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const t = setInterval(() => {
@@ -21,10 +21,9 @@ export default function StickyCTA() {
   }, [])
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    if (window.innerWidth > 768) return
-    setVisible(false)
-    const handleScroll = () => setVisible(window.scrollY > window.innerHeight * 0.85)
+    const handleScroll = () => {
+      setVisible(window.scrollY > 100)
+    }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
