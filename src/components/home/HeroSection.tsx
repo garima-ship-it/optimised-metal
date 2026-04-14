@@ -53,7 +53,7 @@ export default function HeroSection() {
         
 
         {/* Heading — bigger font (change 4, 5, 6) */}
-        <h1 className="text-gradient-silver" style={{ textAlign: 'center', fontSize: 42, fontWeight: 800, lineHeight: '48px', padding: '16px 26px 0', marginBottom: 12 }}>
+        <h1 className="text-gradient-silver" style={{ textAlign: 'center', fontSize:32, fontWeight: 800, lineHeight: '38px', padding: '16px 26px 0', marginBottom: 12 }}>
           Get India&apos;s First Prepaid Metal Card
         </h1>
         <p style={{ textAlign: 'center', fontSize: 18, color: '#9ca3af', padding: '0 10px', marginBottom: 20 }}>
