@@ -77,7 +77,7 @@ export default function HeroSection() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={b.icon2} alt="" style={{ width: 25, height: 25, borderRadius: 3, objectFit: 'cover', transform: `rotate(${b.rot2})` }} />
               </div>
-              <div style={{ position: 'absolute', bottom: 6, left: 0, right: 0, textAlign: 'center', fontSize: 14, color: '#ffffff', lineHeight: '14px', whiteSpace: 'pre-line' }}>
+              <div style={{ position: 'absolute', bottom: 6, left: 0, right: 0, textAlign: 'center', fontSize: 12, color: '#ffffff', lineHeight: '14px', whiteSpace: 'pre-line' }}>
                 {b.label}
               </div>
             </div>
