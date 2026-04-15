@@ -41,7 +41,7 @@ export default function HeroSection() {
           ))}
         </div>
         <Link href="/collection" style={{ position: 'absolute', left: 70, top: 424, background: 'white', borderRadius: 8, height: 48, width: 228, display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', zIndex: 3 }}>
-          <span style={{ fontSize: 14, fontWeight: 600, color: 'black' }}>Explore Luxury Finishes</span>
+          <span style={{ fontSize: 14, fontWeight: 600, color: 'black' }}>Buy Now at <span style={{ fontSize: 13, color: '#888', textDecoration: 'line-through' }}>₹5999</span> ₹2999</span>
         </Link>
         <p style={{ position: 'absolute', left: 70, top: 496, fontSize: 16, color: '#9ca3af', zIndex: 3 }}>Powered by</p>
         {/* eslint-disable-next-line @next/next/no-img-element */}

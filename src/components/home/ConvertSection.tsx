@@ -11,8 +11,8 @@ export default function ConvertSection() {
         </div>
         <video autoPlay loop muted playsInline
           style={{ position: 'absolute', right: 111, top: '50%', transform: 'translateY(calc(-50% + 18px))', width: 537, height: 363, objectFit: 'cover', borderRadius: 12 }}>
-          <source src="/videos/convert-card.webm" type="video/webm" />
-          <source src="/videos/convert-card.mp4" type="video/mp4" />
+          <source src="/videos/cardVideo (1).webm" type="video/webm" />
+          <source src="/videos/cardVideo (1).webm" type="video/webm" />
         </video>
         <p style={{ position: 'absolute', left: 85, top: 84, fontSize: 26, color: '#d6d6d6' }}>Don&apos;t want a new card?</p>
         <h2 className="text-gradient-silver" style={{ position: 'absolute', left: 85, top: 149, fontSize: 55, fontWeight: 800, lineHeight: '66px', width: 660 }}>
@@ -24,7 +24,7 @@ export default function ConvertSection() {
         </div>
         <Link href="/collection"
           style={{ position: 'absolute', left: 85, top: 484, background: 'white', borderRadius: 13, height: 79, width: 377, display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-          <span style={{ fontSize: 23, fontWeight: 600, color: 'black', whiteSpace: 'nowrap' }}>Explore Luxury Finishes</span>
+          <span style={{ fontSize: 23, fontWeight: 600, color: 'black', whiteSpace: 'nowrap' }}>Buy Now at ₹2999</span>
         </Link>
       </section>
 
@@ -39,7 +39,7 @@ export default function ConvertSection() {
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20, position: 'relative' }}>
           <p style={{ fontSize: 16, color: 'rgba(214,214,214,0.82)', textAlign: 'center' }}>Works like your existing payment card</p>
-          <p style={{ fontSize: 16, color: 'rgba(214,214,214,0.82)', textAlign: 'center' }}>FREE Movie Tickets worth <strong style={{ color: 'white' }}>₹300</strong></p>
+          <p style={{ fontSize: 16, color: 'rgba(214,214,214,0.82)', textAlign: 'center' }}>FREE Movie Tickets worth ₹300</p>
         </div>
         <div style={{ height: 1, background: 'rgba(255,255,255,0.2)', marginBottom: 20 }} />
         <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 24, background: '#111' }}>
