@@ -24,7 +24,7 @@ export default function ConvertSection() {
         </div>
         <Link href="/collection"
           style={{ position: 'absolute', left: 85, top: 484, background: 'white', borderRadius: 13, height: 79, width: 377, display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-          <span style={{ fontSize: 23, fontWeight: 600, color: 'black', whiteSpace: 'nowrap' }}>Buy Now at ₹2999</span>
+          <span style={{ fontSize: 23, fontWeight: 600, color: 'black', whiteSpace: 'nowrap' }}>Convert Now at ₹2999</span>
         </Link>
       </section>
 
@@ -51,7 +51,7 @@ export default function ConvertSection() {
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Link href="/collection"
             style={{ background: 'white', borderRadius: 13, height: 45, width: 250, display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}>
-            <span style={{ fontSize: 16, fontWeight: 500, color: 'black' }}>Buy Now at ₹2999</span>
+            <span style={{ fontSize: 16, fontWeight: 500, color: 'black' }}>Convert Now at ₹2999</span>
           </Link>
         </div>
       </section>
