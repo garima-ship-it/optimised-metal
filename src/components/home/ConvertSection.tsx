@@ -21,7 +21,7 @@ export default function ConvertSection() {
         </div>
         <video autoPlay loop muted playsInline
           style={{ position: 'absolute', right: 111, top: '50%', transform: 'translateY(calc(-50% + 18px))', width: 537, height: 363, objectFit: 'cover', borderRadius: 12 }}>
-          <source src="/videos/cardVideo.webm" type="video/webm" />
+          <source src="/videos/cardVideo (1).webm" type="video/webm" />
         </video>
         <p style={{ position: 'absolute', left: 85, top: 84, fontSize: 26, color: '#d6d6d6' }}>Don&apos;t want a new card?</p>
         <h2 className="text-gradient-silver" style={{ position: 'absolute', left: 85, top: 149, fontSize: 55, fontWeight: 800, lineHeight: '66px', width: 660 }}>
@@ -54,7 +54,7 @@ export default function ConvertSection() {
         <div style={{ height: 1, background: 'rgba(255,255,255,0.2)', marginBottom: 20 }} />
         <div style={{ borderRadius: 12, overflow: 'hidden', marginBottom: 24, background: '#111' }}>
           <video autoPlay loop muted playsInline style={{ width: '100%', display: 'block', borderRadius: 12 }}>
-            <source src="/videos/cardVideo.webm" type="video/webm" />
+            <source src="/videos/cardVideo (1).webm" type="video/webm" />
           </video>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
