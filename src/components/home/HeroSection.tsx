@@ -14,7 +14,7 @@ export default function HeroSection() {
       <section className="hero-desktop" style={{ position: 'relative', background: '#040404', width: '100%', height: 640, overflow: 'hidden' }}>
        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/home/heroCard.png" alt="NeoZAP Metal Card"
-          style={{ position: 'absolute', right: 0, top: 0, height: '100%', width: 'auto', pointerEvents: 'none' }} />
+          style={{ position: 'absolute', right: -200, top: 0, height: '100%', width: 900, objectFit: 'cover', objectPosition: 'left center', pointerEvents: 'none' }} />
         <h1 className="text-gradient-silver" style={{ position: 'absolute', left: 70, top: 80, fontSize: 54, fontWeight: 800, lineHeight: '58px', width: 562, zIndex: 3 }}>
           Get India&apos;s First Prepaid Metal Card
         </h1>
