@@ -13,9 +13,9 @@ export default function HeroSection() {
       {/* ── DESKTOP HERO ── */}
       <section className="hero-desktop" style={{ position: 'relative', background: '#040404', width: '100%', height: 640, overflow: 'hidden' }}>
         <div style={{ position: 'absolute', right: 0, top: 0, width: 760, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', pointerEvents: 'none' }}>
-          <video autoPlay loop muted playsInline style={{ display: 'block', height: '100%', width: 'auto', maxWidth: 'none', objectFit: 'contain', objectPosition: 'right center' }}>
-            <source src="/videos/hero-card.mp4" type="video/mp4" />
-          </video>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/home/heroCard.png" alt="NeoZAP Metal Card"
+            style={{ display: 'block', height: '100%', width: 'auto', maxWidth: 'none', objectFit: 'contain', objectPosition: 'right center' }} />
         </div>
         <div style={{ position: 'absolute', right: 430, top: 0, width: 260, height: '100%', background: 'linear-gradient(to right, #040404, rgba(0,0,0,0))', zIndex: 2, pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', right: 0, bottom: 0, width: 800, height: 180, background: 'linear-gradient(to bottom, rgba(0,0,0,0), black)', zIndex: 2, pointerEvents: 'none' }} />
@@ -62,9 +62,9 @@ export default function HeroSection() {
 
         {/* Card video */}
         <div style={{ margin: '0 auto', width: '60%', borderRadius: 16, overflow: 'hidden' }}>
-          <video autoPlay loop muted playsInline style={{ width: '100%', display: 'block', borderRadius: 16 }}>
-            <source src="/videos/hero-card.mp4" type="video/mp4" />
-          </video>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/home/heroCard.png" alt="NeoZAP Metal Card"
+            style={{ width: '100%', display: 'block', borderRadius: 16 }} />
         </div>
 
         {/* Benefit boxes — NO badge element (remove item 2) */}
