@@ -12,13 +12,9 @@ export default function HeroSection() {
     <>
       {/* ── DESKTOP HERO ── */}
       <section className="hero-desktop" style={{ position: 'relative', background: '#040404', width: '100%', height: 640, overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', right: 0, top: 0, width: 760, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', pointerEvents: 'none' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/home/heroCard.png" alt="NeoZAP Metal Card"
-            style={{ display: 'block', height: '100%', width: 'auto', maxWidth: 'none', objectFit: 'contain', objectPosition: 'right center' }} />
-        </div>
-        <div style={{ position: 'absolute', right: 430, top: 0, width: 260, height: '100%', background: 'linear-gradient(to right, #040404, rgba(0,0,0,0))', zIndex: 2, pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', right: 0, bottom: 0, width: 800, height: 180, background: 'linear-gradient(to bottom, rgba(0,0,0,0), black)', zIndex: 2, pointerEvents: 'none' }} />
+       {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/home/heroCard.png" alt="NeoZAP Metal Card"
+          style={{ position: 'absolute', right: 0, top: 0, height: '100%', width: 'auto', objectFit: 'contain', objectPosition: 'right center', pointerEvents: 'none' }} />
         <h1 className="text-gradient-silver" style={{ position: 'absolute', left: 70, top: 80, fontSize: 54, fontWeight: 800, lineHeight: '58px', width: 562, zIndex: 3 }}>
           Get India&apos;s First Prepaid Metal Card
         </h1>
@@ -61,7 +57,7 @@ export default function HeroSection() {
         </p>
 
         {/* Card video */}
-        <div style={{ margin: '0 auto', width: '60%', borderRadius: 16, overflow: 'hidden' }}>
+        <div style={{ margin: '0 auto', width: '100%', overflow: 'hidden' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/home/heroCard.png" alt="NeoZAP Metal Card"
             style={{ width: '100%', display: 'block', borderRadius: 16 }} />
