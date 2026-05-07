@@ -20,18 +20,13 @@ function CheckoutContent() {
   const product = {
     id: params.get('productId') ?? '',
     name: params.get('productName') ?? 'NeoZAP Metal Card',
-    price: Number(params.get('price') ?? 5999),
+    price: Number(params.get('price') ?? 2999),
     dprice: Number(params.get('dprice') ?? 2999),
     img: params.get('img') ?? '',
-    qty: Number(params.get('qty') ?? 1),
   }
 
-  const fullPrice = product.dprice * product.qty
+  const fullPrice = product.dprice
   const discPct = Math.round((1 - product.dprice / product.price) * 100)
-
-  // COD pricing
-  const codPrepay = 1000
-  const codOnDelivery = fullPrice - codPrepay  // remaining on delivery
 
   // User details
   const [name, setName] = useState('')
@@ -48,6 +43,9 @@ function CheckoutContent() {
   // Pickup address (convert flow only)
   const [pickup, setPickup] = useState({ address: '', city: '', state: '', pincode: '' })
   const [sameAsDelivery, setSameAsDelivery] = useState(false)
+
+  // Payment selection
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'online'>('online')
 
   useEffect(() => {
     try {
@@ -89,24 +87,21 @@ function CheckoutContent() {
     sessionStorage.setItem('nz_user', JSON.stringify({ name: name.trim(), phone }))
   }
 
-  const isDeliveryComplete = delivery.address && delivery.city && delivery.state && delivery.pincode.length === 6
+  const isAddressComplete = !!(delivery.address && delivery.city && delivery.state && delivery.pincode.length === 6)
   const isPickupComplete = flow === 'neozap' || (pickup.address && pickup.city && pickup.state && pickup.pincode.length === 6)
-  
-const isAddressComplete = !!(delivery.address && delivery.city && delivery.state && delivery.pincode.length === 6)
+  const canPay = verified && isAddressComplete && !!isPickupComplete
 
-  const canPay = verified && isAddressComplete && isPickupComplete
-
-  const placeOrder = (method: 'online' | 'cod') => {
+  const placeOrder = () => {
     const order = {
       id: `NZ${Date.now()}`,
       user: { name, phone },
       product, flow,
       delivery,
       pickup: flow === 'convert' ? pickup : null,
-      payment: method,
+      payment: paymentMethod,
       total: fullPrice,
-      codPrepay: method === 'cod' ? codPrepay : null,
-      codOnDelivery: method === 'cod' ? codOnDelivery : null,
+      codPrepay: paymentMethod === 'cod' ? 1000 : null,
+      codOnDelivery: paymentMethod === 'cod' ? 1999 : null,
       createdAt: new Date().toISOString(),
     }
     sessionStorage.setItem('nz_last_order', JSON.stringify(order))
@@ -121,7 +116,7 @@ const isAddressComplete = !!(delivery.address && delivery.city && delivery.state
         <span style={{ fontSize: 12, color: '#6b7280' }}>🔒 Secure Checkout</span>
       </div>
 
-      <div style={{ maxWidth: 480, margin: '0 auto', padding: '20px 20px 160px' }}>
+      <div style={{ maxWidth: 480, margin: '0 auto', padding: '20px 20px 120px' }}>
 
         {/* Product summary */}
         <div style={{ background: '#111', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 14, padding: '14px', marginBottom: 28, display: 'flex', gap: 12, alignItems: 'center' }}>
@@ -136,7 +131,7 @@ const isAddressComplete = !!(delivery.address && delivery.city && delivery.state
           </div>
           <div style={{ textAlign: 'right', flexShrink: 0 }}>
             <p style={{ fontSize: 15, fontWeight: 800 }}>₹{fullPrice.toLocaleString('en-IN')}</p>
-            <p style={{ fontSize: 11, color: '#22c55e' }}>{discPct}% off</p>
+            {discPct > 0 && <p style={{ fontSize: 11, color: '#22c55e' }}>{discPct}% off</p>}
           </div>
         </div>
 
@@ -187,27 +182,29 @@ const isAddressComplete = !!(delivery.address && delivery.city && delivery.state
         </div>
 
         {/* SECTION 2 — Delivery Address */}
-        <div style={{ marginBottom: flow === 'convert' ? 28 : 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-            <div style={{ width: 24, height: 24, borderRadius: '50%', background: isAddressComplete ? '#22c55e' : 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: isAddressComplete ? 'black' : '#6b7280', flexShrink: 0 }}>
-              {isAddressComplete ? '✓' : '2'}
+        {verified && (
+          <div style={{ marginBottom: 28 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+              <div style={{ width: 24, height: 24, borderRadius: '50%', background: isAddressComplete ? '#22c55e' : 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: isAddressComplete ? 'black' : '#6b7280', flexShrink: 0 }}>
+                {isAddressComplete ? '✓' : '2'}
+              </div>
+              <h2 style={{ fontSize: 15, fontWeight: 700 }}>📦 Delivery Address</h2>
             </div>
-            <h2 style={{ fontSize: 15, fontWeight: 700 }}>📦 Delivery Address</h2>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <input value={delivery.address} onChange={e => setDelivery(d => ({ ...d, address: e.target.value }))}
-              placeholder="House/Flat No., Street, Area, Landmark" style={inp} />
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-              <input value={delivery.city} onChange={e => setDelivery(d => ({ ...d, city: e.target.value }))} placeholder="City" style={inp} />
-              <input value={delivery.pincode} onChange={e => setDelivery(d => ({ ...d, pincode: e.target.value.replace(/\D/g,'').slice(0,6) }))} placeholder="PIN Code" type="tel" style={inp} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <input value={delivery.address} onChange={e => setDelivery(d => ({ ...d, address: e.target.value }))}
+                placeholder="House/Flat No., Street, Area, Landmark" style={inp} />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                <input value={delivery.city} onChange={e => setDelivery(d => ({ ...d, city: e.target.value }))} placeholder="City" style={inp} />
+                <input value={delivery.pincode} onChange={e => setDelivery(d => ({ ...d, pincode: e.target.value.replace(/\D/g,'').slice(0,6) }))} placeholder="PIN Code" type="tel" style={inp} />
+              </div>
+              <input value={delivery.state} onChange={e => setDelivery(d => ({ ...d, state: e.target.value }))} placeholder="State" style={inp} />
             </div>
-            <input value={delivery.state} onChange={e => setDelivery(d => ({ ...d, state: e.target.value }))} placeholder="State" style={inp} />
           </div>
-        </div>
+        )}
 
         {/* SECTION 3 — Pickup Address (convert only) */}
-        {flow === 'convert' && (
-          <div>
+        {verified && flow === 'convert' && (
+          <div style={{ marginBottom: 28 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
               <div style={{ width: 24, height: 24, borderRadius: '50%', background: isPickupComplete ? '#22c55e' : 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: isPickupComplete ? 'black' : '#6b7280', flexShrink: 0 }}>
                 {isPickupComplete ? '✓' : '3'}
@@ -221,7 +218,7 @@ const isAddressComplete = !!(delivery.address && delivery.city && delivery.state
             </label>
             {!sameAsDelivery && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <input value={pickup.address} onChange={e => { setSameAsDelivery(false); setPickup(p => ({ ...p, address: e.target.value })) }} placeholder="House/Flat No., Street, Area, Landmark" style={inp} />
+                <input value={pickup.address} onChange={e => setPickup(p => ({ ...p, address: e.target.value }))} placeholder="House/Flat No., Street, Area, Landmark" style={inp} />
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
                   <input value={pickup.city} onChange={e => setPickup(p => ({ ...p, city: e.target.value }))} placeholder="City" style={inp} />
                   <input value={pickup.pincode} onChange={e => setPickup(p => ({ ...p, pincode: e.target.value.replace(/\D/g,'').slice(0,6) }))} placeholder="PIN Code" type="tel" style={inp} />
@@ -231,49 +228,75 @@ const isAddressComplete = !!(delivery.address && delivery.city && delivery.state
             )}
           </div>
         )}
+
+        {/* SECTION 4 — Payment Options (shown after address is complete) */}
+        {verified && isAddressComplete && (
+          <div style={{ marginBottom: 28 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+              <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: '#6b7280', flexShrink: 0 }}>
+                {flow === 'convert' ? '4' : '3'}
+              </div>
+              <h2 style={{ fontSize: 15, fontWeight: 700 }}>💳 Payment Option</h2>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {/* Partial COD */}
+              <div onClick={() => setPaymentMethod('cod')}
+                style={{ background: paymentMethod === 'cod' ? 'rgba(255,255,255,0.05)' : '#111', border: `2px solid ${paymentMethod === 'cod' ? 'white' : 'rgba(255,255,255,0.09)'}`, borderRadius: 14, padding: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all .15s' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  {/* Radio */}
+                  <div style={{ width: 20, height: 20, borderRadius: '50%', border: `2px solid ${paymentMethod === 'cod' ? 'white' : '#4b5563'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    {paymentMethod === 'cod' && <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'white' }} />}
+                  </div>
+                  <div>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: 'white' }}>Partial COD</p>
+                    <p style={{ fontSize: 12, color: '#9ca3af', marginTop: 2 }}>₹1,000 now + ₹1,999 on delivery</p>
+                  </div>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: 'white' }}>₹1,000</p>
+                  <p style={{ fontSize: 11, color: '#6b7280' }}>pay now</p>
+                </div>
+              </div>
+
+              {/* Full Payment */}
+              <div onClick={() => setPaymentMethod('online')}
+                style={{ background: paymentMethod === 'online' ? 'rgba(255,255,255,0.05)' : '#111', border: `2px solid ${paymentMethod === 'online' ? 'white' : 'rgba(255,255,255,0.09)'}`, borderRadius: 14, padding: '16px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'all .15s' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  {/* Radio */}
+                  <div style={{ width: 20, height: 20, borderRadius: '50%', border: `2px solid ${paymentMethod === 'online' ? 'white' : '#4b5563'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    {paymentMethod === 'online' && <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'white' }} />}
+                  </div>
+                  <div>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: 'white' }}>Full Payment</p>
+                    <p style={{ fontSize: 12, color: '#9ca3af', marginTop: 2 }}>Pay the full amount now</p>
+                  </div>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: 'white' }}>₹2,999</p>
+                  <p style={{ fontSize: 11, color: '#6b7280' }}>pay now</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Fixed bottom — price + pay buttons */}
+      {/* Fixed bottom */}
       <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#0a0a0a', borderTop: '1px solid rgba(255,255,255,0.08)', padding: '16px 20px', zIndex: 50 }}>
-
         {canPay ? (
-          <>
-            {/* COD pricing info */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-              <span style={{ fontSize: 12, color: '#6b7280' }}>Online payment</span>
-              <span style={{ fontSize: 12, fontWeight: 600 }}>₹{fullPrice.toLocaleString('en-IN')} full</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
-              <span style={{ fontSize: 12, color: '#6b7280' }}>Cash on Delivery</span>
-              <span style={{ fontSize: 12, fontWeight: 600 }}>₹{codPrepay.toLocaleString('en-IN')} now + ₹{codOnDelivery.toLocaleString('en-IN')} on delivery</span>
-            </div>
-            <div style={{ display: 'flex', gap: 10 }}>
-              <button onClick={() => placeOrder('cod')}
-                style={{ flex: 1, height: 50, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 12, fontSize: 13, fontWeight: 600, color: 'white', cursor: 'pointer' }}>
-                💵 COD — ₹{codPrepay} now
-              </button>
-              <button onClick={() => placeOrder('online')}
-                style={{ flex: 1, height: 50, background: 'white', borderRadius: 12, border: 'none', fontSize: 13, fontWeight: 700, color: 'black', cursor: 'pointer' }}>
-                💳 Pay ₹{fullPrice.toLocaleString('en-IN')}
-              </button>
-            </div>
-          </>
+          <button onClick={placeOrder}
+            style={{ width: '100%', height: 50, background: 'white', borderRadius: 12, border: 'none', fontSize: 15, fontWeight: 700, color: 'black', cursor: 'pointer' }}>
+            {paymentMethod === 'cod'
+              ? 'Place Order — Pay ₹1,000 Now'
+              : 'Pay ₹2,999 — Complete Order'}
+          </button>
         ) : (
-          <>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 12 }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                <span style={{ fontSize: 20, fontWeight: 800 }}>₹{fullPrice.toLocaleString('en-IN')}</span>
-                <span style={{ fontSize: 13, color: '#555', textDecoration: 'line-through' }}>₹{(product.price).toLocaleString('en-IN')}</span>
-                <span style={{ fontSize: 12, color: '#22c55e', fontWeight: 600 }}>{discPct}% off</span>
-              </div>
-              <span style={{ fontSize: 12, color: '#6b7280' }}>Free shipping</span>
-            </div>
-            <div style={{ height: 50, background: 'rgba(255,255,255,0.04)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <span style={{ fontSize: 13, color: '#4b5563' }}>
-                {!verified ? '🔒 Verify your number to continue' : !isAddressComplete ? '📦 Fill delivery address to continue' : '🏠 Fill pickup address to continue'}
-              </span>
-            </div>
-          </>
+          <div style={{ height: 50, background: 'rgba(255,255,255,0.04)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(255,255,255,0.07)' }}>
+            <span style={{ fontSize: 13, color: '#4b5563' }}>
+              {!verified ? '🔒 Verify your number to continue' : !isAddressComplete ? '📦 Fill delivery address to continue' : !isPickupComplete ? '🏠 Fill pickup address to continue' : ''}
+            </span>
+          </div>
         )}
       </div>
     </div>
